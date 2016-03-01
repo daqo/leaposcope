@@ -38,6 +38,17 @@
         <%= yield %>
       </div>
     </div><!-- /.container -->
-    
   </body>
+<script>
+  
+  (window.controller = new Leap.Controller({background: true}))
+    .use('playback', {
+      loop: false,
+      pauseHotkey: false,
+      pauseOnHand: false
+    })
+    .use('riggedHand')
+    .connect();
+
+</script>
 </html>

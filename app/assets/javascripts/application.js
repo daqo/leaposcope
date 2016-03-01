@@ -11,10 +11,15 @@
 // about supported directives.
 //
 //= require jquery
-
 //= require tether
 //= require bootstrap-sprockets
-
 //= require jquery_ujs
 //= require turbolinks
+
+//= require leap/WebGL/three.min
+//= require leap/leap
+//= require leap/leap-plugins-0.1.6
+//= require leap/leap.rigged-hand
+//= require leap/leap.playback-0.2.1.min
 //= require_tree .
+
