@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Dir.chdir("db/recordings")
+Dir.foreach(".") do |name|
+	next if name == '.' or name == '..'
+	playback_name = name.split('.').first
+	puts "Loading #{name}."
+	Playback.create! name: playback_name, data: File.read(name)
+end

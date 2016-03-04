@@ -298,7 +298,41 @@ var _sortBy = function (obj, iterator, context) {
     };
   }
 
-  initScene = function(element) {
+  // initScene = function(element) {
+  //   var pointLight, scope;
+  //   scope = this;
+  //   this.scene = new THREE.Scene();
+  //   pointLight = new THREE.PointLight(0xFFffff);
+  //   pointLight.position = new THREE.Vector3(-20, 10, 0);
+  //   pointLight.lookAt(new THREE.Vector3(0, 0, 0));
+  //   this.scene.add(pointLight);
+  //   this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+  //   this.camera.position.fromArray([0, 6, 30]);
+  //   this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+  //   if (!this.renderer) {
+  //     this.renderer = new THREE.WebGLRenderer({
+  //       alpha: true
+  //     });
+  //     this.renderer.setClearColor(0x000000, 0);
+  //     this.renderer.setSize(window.innerWidth, window.innerHeight);
+  //     this.renderer.domElement.style.position = 'fixed';
+  //     this.renderer.domElement.style.top = 0;
+  //     this.renderer.domElement.style.left = 0;
+  //     this.renderer.domElement.style.width = '100%';
+  //     this.renderer.domElement.style.height = '100%';
+  //     element.appendChild(this.renderer.domElement);
+  //     window.addEventListener('resize', function() {
+  //       scope.camera.aspect = window.innerWidth / window.innerHeight;
+  //       scope.camera.updateProjectionMatrix();
+  //       scope.renderer.setSize(window.innerWidth, window.innerHeight);
+  //       return scope.renderer.render(scope.scene, scope.camera);
+  //     }, false);
+  //   }
+  //   scope.scene.add(scope.camera);
+  //   return scope.renderer.render(scope.scene, scope.camera);
+  // };
+
+    initScene = function(element) {
     var pointLight, scope;
     scope = this;
     this.scene = new THREE.Scene();
@@ -314,12 +348,11 @@ var _sortBy = function (obj, iterator, context) {
         alpha: true
       });
       this.renderer.setClearColor(0x000000, 0);
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      this.renderer.domElement.style.position = 'fixed';
+      this.renderer.setSize(element.clientWidth, element.clientHeight);
+      this.renderer.domElement.style.position = 'absolute';
+      // this.renderer.domElement.style.border = "1px solid red";
       this.renderer.domElement.style.top = 0;
       this.renderer.domElement.style.left = 0;
-      this.renderer.domElement.style.width = '100%';
-      this.renderer.domElement.style.height = '100%';
       element.appendChild(this.renderer.domElement);
       window.addEventListener('resize', function() {
         scope.camera.aspect = window.innerWidth / window.innerHeight;
@@ -360,6 +393,9 @@ var _sortBy = function (obj, iterator, context) {
     if (!scope.parent) {
       scope.initScene(document.body);
       scope.parent = scope.scene;
+    } else {
+		scope.initScene(scope.parent);
+		scope.parent = scope.scene;
     }
     scope.renderFn || (scope.renderFn = function() {
       return scope.renderer.render(scope.scene, scope.camera);

@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @playback.name %></h1>
+<hr/>
+<% #link_to 'Edit', edit_playback_path(@playback), class: "btn btn-secondary" %>
+<progress id="progressbar" class="progress progress-striped progress-success" value="0" max="100">10</progress>
+<center>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary" id="replay-btn">Play/Pause</button>
+  <%= link_to 'New Playback', new_playback_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Delete',@playback, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-secondary' %>
+</div>
+</center>
+<hr/>
+
+<div id="leap-canvas">
+  <img src="../assets/canvas-background.jpg" width="100%" height="100%" id="image">
+</div>
+<script>
+  
+  (window.controller = new Leap.Controller({background: true}))
+    .use('playback', {
+      recording: '/gesture.json.lz',
+      loop: false,
+      pauseHotkey: false,
+      pauseOnHand: false
+    })
+    .use('riggedHand', {parent: document.getElementById("leap-canvas")})
+    .connect();
+
+    controller.on('frame', function(){
+    	$("#progressbar").attr("value", Math.ceil((player().recording.frameIndex) / recordingLength() * 100));
+    })
+
+   recordingLength = function() {
+        return Math.max(player().recording.frameData.length - 1, 0);
+   };
+
+   $('#replay-btn').click(function() {
+   		player().toggle();
+   });
+
+</script>

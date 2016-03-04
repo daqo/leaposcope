@@ -1,0 +1,20 @@
+<%= form_for @playback, html: { class: "form-inline" }  do |f| %>
+
+  <% if @playback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@playback.errors.count, "error") %> prohibited this playback from being saved:</h2>
+
+      <ul>
+      <% @playback.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.text_field :name, placeholder: "Enter the name", type: "text", class: "form-control" %>
+  </div>
+  <%= f.submit "Create", class: "btn btn-primary" %>
+  <%= link_to 'Back', playbacks_path, class: "btn btn-info" %>
+<% end %>

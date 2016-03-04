@@ -20,6 +20,10 @@
 //= require leap/leap
 //= require leap/leap-plugins-0.1.6
 //= require leap/leap.rigged-hand
-//= require leap/leap.playback-0.2.1.min
-//= require_tree .
+//= require playbacks
+//= require lib/FileSaver
 
+// function activate(id) {
+// 	$('.nav-link').removeClass('active');
+// 	document.getElementById(id).className = "nav-link active";
+// }
