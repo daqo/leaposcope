@@ -74,7 +74,7 @@ body {
  */
 
 .main {
-  padding: 20px;
+  background-color: #BEB4B3;
 }
 @media (min-width: 768px) {
   .main {
@@ -84,6 +84,11 @@ body {
 }
 .main .page-header {
   margin-top: 0;
+}
+
+.main .content-header {
+  padding: 5px;
+  background-color: #B2C023;
 }
 
 
@@ -106,14 +111,22 @@ body {
   border-radius: 50%;
 }
 
+/*
+ * Canvas related styles
+ */
+
 #leap-canvas {
   position:relative; 
   overflow:scroll; 
   width:100%; 
   height:500px; 
-  border:1px solid #5CB85C; 
 }
 
 canvas{
   pointer-events: none;
+}
+
+.list-group-item.active, .list-group-item.active:hover {
+  background-color: #B2BF27;
+  border-color: #B2BF27;
 }
