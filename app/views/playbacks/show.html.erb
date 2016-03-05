@@ -1,10 +1,10 @@
 <div class='content-header'>
 <p id="notice"><%= notice %></p>
 
-<h1><%= @playback.name %></h1>
+<h1 style="color: white"><%= @playback.name %></h1>
 <hr/>
 <% #link_to 'Edit', edit_playback_path(@playback), class: "btn btn-secondary" %>
-<progress id="progressbar" class="progress progress-striped progress-success" value="0" max="100">10</progress>
+<progress id="progressbar" class="progress progress-warning" value="0" max="100">10</progress>
 <center>
 <div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-secondary" id="replay-btn">Play/Pause</button>
