@@ -20,16 +20,18 @@
 </div>
 
 <script>
-  
-  (window.controller = new Leap.Controller({background: true}))
-    .use('playback', {
-      recording: '/gesture.json.lz',
-      loop: false,
-      pauseHotkey: false,
-      pauseOnHand: false
-    })
+  controller = new Leap.Controller({background: true})
+  $(document).ready(function() {
+        controller.use('playback', {
+        recording: '/gesture.json.lz',
+        loop: false,
+        pauseHotkey: false,
+        pauseOnHand: false
+      })
     .use('riggedHand', {parent: document.getElementById("leap-canvas")})
     .connect();
+  });
+  
 
     controller.on('frame', function(){
     	$("#progressbar").attr("value", Math.ceil((player().recording.frameIndex) / recordingLength() * 100));
