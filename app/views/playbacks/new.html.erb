@@ -15,7 +15,7 @@
 		<div class="actions">
 		  <button type="button" class="btn btn-default btn-prev">
 		    <span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
-		  <button type="button" id="nextBtn" class="btn btn-primary btn-next" data-last="Complete" disabled="disabled">Next
+		  <button type="button" id="nextBtn" class="btn btn-primary btn-next" data-last="Save" disabled="disabled">Next
 		    <span class="glyphicon glyphicon-arrow-right"></span>
 		  </button>
 		</div>
@@ -48,6 +48,25 @@
 	</div>
 </div>
 
+<!-- Waiting Modal Start here-->
+<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
+    role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-time">
+                    </span>Please Wait
+                 </h4>
+            </div>
+            <div class="modal-body">
+            	<progress class="progress progress-danger" value="100" style="width:100%" max="100"></progress>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Waiting Modal ends Here -->
+
 <script>
 	$( document ).ready(function() {
 		$("#playback_name").keyup(function() {
@@ -68,7 +87,21 @@
 		$("#playbackBtn").click(function() {
   			player().recording.setFrames(player().recording.frameData);
             player().play();
-	  	});	  	
+	  	});
+
+	  	$('#myWizard').on('finished.fu.wizard', function (evt, data) {
+	  		$('#myPleaseWait').modal('show');
+	  		playback_data = player().recording.export("lz")
+			$.ajax({
+			  method: "POST",
+			  url: "/playbacks",
+			  data: {playback: { name: $("#playback_name").val(), data: playback_data } }
+			}).done(function( msg ) {
+			    $('#myPleaseWait').modal('hide');
+			    window.location.href = "/playbacks";
+			});
+		});
+
   	});
 
 </script>

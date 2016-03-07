@@ -3,7 +3,6 @@ class PlaybacksController < ApplicationController
 
   # GET /playbacks
   def index
-    @playbacks = Playback.all
     if @playbacks.present?
       redirect_to @playbacks.first
     else
@@ -76,6 +75,7 @@ class PlaybacksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def playback_params
-      params.require(:playback).permit(:name)
+
+      params.require(:playback).permit(:name, :data)
     end
 end
