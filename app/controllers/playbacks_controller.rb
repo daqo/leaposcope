@@ -17,7 +17,6 @@ class PlaybacksController < ApplicationController
 
   # GET /playbacks/new
   def new
-    @playback = Playback.new
   end
 
   # GET /playbacks/1/edit
@@ -45,8 +44,9 @@ class PlaybacksController < ApplicationController
   def update
     respond_to do |format|
       if @playback.update(playback_params)
-        format.html { redirect_to @playback, notice: 'Playback was successfully updated.' }
+        # format.html { redirect_to @playback, notice: 'Playback was successfully updated.' }
         format.json { render :show, status: :ok, location: @playback }
+        # format.js { redirect_to @playbacks.last }
       else
         format.html { render :edit }
         format.json { render json: @playback.errors, status: :unprocessable_entity }

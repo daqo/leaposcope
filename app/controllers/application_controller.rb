@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   before_action :load_playbacks
 
   def load_playbacks
-  	@playbacks = Playback.order("created_at desc")
+  	@playbacks = Playback.order("updated_at desc")
   end
 end
