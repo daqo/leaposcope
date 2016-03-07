@@ -27,3 +27,38 @@
 // 	$('.nav-link').removeClass('active');
 // 	document.getElementById(id).className = "nav-link active";
 // }
+
+
+var enable_canvas;
+var allowedRecordingLength = 300;
+enable_canvas = function() {
+  var timerId;
+  timerId = 0;
+  timerId = window.setInterval((function() {
+    $('#leap-canvas').each(function() {
+      if ($(this).is(':visible')) {
+        clearInterval(timerId);
+        (window.controller = new Leap.Controller({
+          background: true
+        })).use('playback', {
+          loop: false,
+          pauseHotkey: false,
+          pauseOnHand: false
+        }).use('riggedHand', {
+          parent: document.getElementById('leap-canvas')
+        }).connect();
+
+        window.controller.on('frame', function(){
+          if (player().isRecording()){
+              if (player().recording.frameData.length <= allowedRecordingLength) {
+                $("#progressbar").attr("value", Math.ceil((player().recording.frameData.length) / allowedRecordingLength * 100));
+              } else  {
+                player().finishRecording();
+                $("#playbackBtn").removeAttr('disabled');
+              }
+          }
+        });
+      }
+    });
+  }), 100);
+};

@@ -89,10 +89,12 @@ body {
 }
 
 .main .content-header {
-  padding: 5px;
-  background-color: #B2C023;
+  padding: 15px;
 }
 
+.main .content-header h1 {
+  color: white;
+}
 
 /*
  * Placeholder dashboard ideas

@@ -1,7 +1,9 @@
 <div class='content-header'>
-<p id="notice"><%= notice %></p>
+<% if notice.present? %>
+  <div class="alert alert-success" role="alert"><%= notice %></div>
+<% end %>
 
-<h1 style="color: white"><%= @playback.name %></h1>
+<h1><%= @playback.name %></h1>
 <hr/>
 <% #link_to 'Edit', edit_playback_path(@playback), class: "btn btn-secondary" %>
 <progress id="progressbar" class="progress progress-warning" value="0" max="100">10</progress>
