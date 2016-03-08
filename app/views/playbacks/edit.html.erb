@@ -1,5 +1,4 @@
-<%= render partial: "shared/playback_wizard" %>
-<%= render partial: "shared/waiting_modal" %>
+<%= render "form" %>
 
 <script>
 	$( document ).ready(function() {
@@ -31,13 +30,22 @@
 	  			$('#myPleaseWait').modal('show');
 	  			playback_data = player().recording.export("lz") 
 	  			$.ajax({
-					  dataType: 'html',
+					  dataType: 'json',
 					  method: "PUT",
 					  url: "/playbacks/<%= @playback.id %>",
 					  data: {playback: { name: $("#playback_name").val(), data: playback_data } }
 					}).done(function( msg ) {
 					    $('#myPleaseWait').modal('hide');
 					    window.location.href = "/playbacks";
+					}).fail(function(msg) {
+						str = "<ul><h2>Save failed</h2>"
+						for (name in msg.responseJSON) {
+							str += "<li>" + name + ' ' + msg.responseJSON[name] + "</li>"
+						}
+						str += "</ul>"
+						$("#errors").html(str);
+						$("#errors").css("display","block");
+						$('#myPleaseWait').modal('hide');
 					});
 	  		} else {
 	  			alert("Please record the playback.");

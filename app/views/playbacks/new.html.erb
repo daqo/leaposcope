@@ -1,8 +1,10 @@
-<%= render partial: "shared/playback_wizard" %>
-<%= render partial: "shared/waiting_modal" %>
+<%= render "form" %>
 
 <script>
 	$( document ).ready(function() {
+		if ($("#playback_name").val != "") {
+			$("#nextBtn").removeAttr("disabled");
+		}
 		$("#playback_name").keyup(function() {
 			if ($("#playback_name").val() != "") {
 				$("#nextBtn").removeAttr("disabled");
