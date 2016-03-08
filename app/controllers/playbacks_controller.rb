@@ -17,6 +17,7 @@ class PlaybacksController < ApplicationController
 
   # GET /playbacks/new
   def new
+    @playback = Playback.new
   end
 
   # GET /playbacks/1/edit

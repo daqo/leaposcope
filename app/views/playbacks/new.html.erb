@@ -1,71 +1,5 @@
-<div class='content-header'>
-	<div class="wizard" data-initialize="wizard" id="myWizard">
-		<div class="steps-container">
-		  <ul class="steps">
-		    <li data-step="1" data-name="campaign" class="active">
-		      <span class="badge">1</span>Name
-		      <span class="chevron"></span>
-		    </li>
-		    <li data-step="2">
-		      <span class="badge">2</span>Record
-		      <span class="chevron"></span>
-		    </li>
-		  </ul>
-		</div>
-		<div class="actions">
-		  <button type="button" class="btn btn-default btn-prev">
-		    <span class="glyphicon glyphicon-arrow-left"></span>Prev</button>
-		  <button type="button" id="nextBtn" class="btn btn-primary btn-next" data-last="Save" disabled="disabled">Next
-		    <span class="glyphicon glyphicon-arrow-right"></span>
-		  </button>
-		</div>
-		<div class="step-content">
-		  <div class="step-pane active sample-pane alert" data-step="1">
-			<h4>Record a new gesture</h4>
-			<hr/>
-			<div class="form-group">
-				<input id="playback_name" type="text" class="form-control" placeholder="Enter the name"/>
-			</div>
-			
-		  </div>
-		  <div class="step-pane sample-pane" data-step="2">
-		  	<div class="row">
-		  		<div class="col-md-4"><h4>Hit 'Record' when ready</h4></div>
-		    	<div class="col-md-8">
-		    		<button type="button" class="btn btn-secondary" id="recordBtn">Record</button>
-		    		<button type="button" class="btn btn-secondary" id="playbackBtn" disabled>Playback</button>
-		    	</div>
-		    	
-	    	</div>
-		    <hr/>
-		    <progress id="progressbar" class="progress progress-warning" value="0" max="100">10</progress>
-		    <div id="leap-canvas">
-			  <!-- Canvas will be rendered here -->
-			  <%= image_tag "canvas-bg.png", id:"canvas-bg", width: "100%", height: "100%" %>
-			</div>
-		  </div>
-		</div>
-	</div>
-</div>
-
-<!-- Waiting Modal Start here-->
-<div class="modal fade bs-example-modal-sm" id="myPleaseWait" tabindex="-1"
-    role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">
-                    <span class="glyphicon glyphicon-time">
-                    </span>Please Wait
-                 </h4>
-            </div>
-            <div class="modal-body">
-            	<progress class="progress progress-danger" value="100" style="width:100%" max="100"></progress>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Waiting Modal ends Here -->
+<%= render partial: "shared/playback_wizard" %>
+<%= render partial: "shared/waiting_modal" %>
 
 <script>
 	$( document ).ready(function() {
@@ -90,16 +24,23 @@
 	  	});
 
 	  	$('#myWizard').on('finished.fu.wizard', function (evt, data) {
-	  		$('#myPleaseWait').modal('show');
-	  		playback_data = player().recording.export("lz")
-			$.ajax({
-			  method: "POST",
-			  url: "/playbacks",
-			  data: {playback: { name: $("#playback_name").val(), data: playback_data } }
-			}).done(function( msg ) {
-			    $('#myPleaseWait').modal('hide');
-			    window.location.href = "/playbacks";
-			});
+	  		if (player().recording) {
+		  		$('#myPleaseWait').modal('show');
+		  		playback_data = player().recording.export("lz")
+				$.ajax({
+				  method: "POST",
+				  dataType: 'json',
+				  url: "/playbacks",
+				  data: {playback: { name: $("#playback_name").val(), data: playback_data } }
+				}).done(function( msg ) {
+				    $('#myPleaseWait').modal('hide');
+				    window.location.href = "/playbacks";
+				}).fail(function(msg) {
+					window.location.href = "/playbacks/new";
+				});
+			} else {
+	  			alert("Please record the playback.");
+	  		}
 		});
 
   	});
