@@ -1,31 +1,11 @@
 <%= render "form" %>
 
 <script>
-	$( document ).ready(function() {
-		if ($("#playback_name").val != "") {
-			$("#nextBtn").removeAttr("disabled");
-		}
-		$("#playback_name").keyup(function() {
-			if ($("#playback_name").val() != "") {
-				$("#nextBtn").removeAttr("disabled");
-			} else {
-				$("#nextBtn").attr("disabled", "disabled");
-			}
-	  	});
-  	
-		enable_canvas();
-
-		$("#recordBtn").click(function() {
-  			player().record();
-  			$("#playbackBtn").attr('disabled', 'disabled');
-	  	});
-
-		$("#playbackBtn").click(function() {
-  			player().recording.setFrames(player().recording.frameData);
-            player().play();
-	  	});
-
-	  	$('#myWizard').on('finished.fu.wizard', function (evt, data) {
+	if ($("#playback_name").val !== "") {
+	      $("#nextBtn").removeAttr("disabled");
+	}
+	  	
+	$('#myWizard').on('finished.fu.wizard', function (evt, data) {
 	  		if (player().recording) {
 	  			$('#myPleaseWait').modal('show');
 	  			playback_data = player().recording.export("lz") 
@@ -51,8 +31,7 @@
 	  			alert("Please record the playback.");
 	  		}
 			
-		});
+	});
 
-  	});
 
 </script>

@@ -1,57 +1,30 @@
 <%= render "form" %>
 
 <script>
-	$( document ).ready(function() {
-		if ($("#playback_name").val != "") {
-			$("#nextBtn").removeAttr("disabled");
-		}
-		$("#playback_name").keyup(function() {
-			if ($("#playback_name").val() != "") {
-				$("#nextBtn").removeAttr("disabled");
-			} else {
-				$("#nextBtn").attr("disabled", "disabled");
-			}
-	  	});
-  	
-		enable_canvas();
-
-		$("#recordBtn").click(function() {
-  			player().record();
-  			$("#playbackBtn").attr('disabled', 'disabled');
-	  	});
-
-		$("#playbackBtn").click(function() {
-  			player().recording.setFrames(player().recording.frameData);
-            player().play();
-	  	});
-
-	  	$('#myWizard').on('finished.fu.wizard', function (evt, data) {
-	  		if (player().recording) {
-		  		$('#myPleaseWait').modal('show');
-		  		playback_data = player().recording.export("lz")
-				$.ajax({
-				  method: "POST",
-				  dataType: 'json',
-				  url: "/playbacks",
-				  data: {playback: { name: $("#playback_name").val(), data: playback_data } }
-				}).done(function( msg ) {
-				    $('#myPleaseWait').modal('hide');
-				    window.location.href = "/playbacks";
-				}).fail(function(msg) {
-					str = "<ul><h2>Save failed</h2>"
-					for (name in msg.responseJSON) {
-						str += "<li>" + name + ' ' + msg.responseJSON[name] + "</li>"
-					}
-					str += "</ul>"
-					$("#errors").html(str);
-					$("#errors").css("display","block");
-					$('#myPleaseWait').modal('hide');
-				});
-			} else {
-	  			alert("Please record the playback.");
-	  		}
-		});
-
-  	});
-
+  	$('#myWizard').on('finished.fu.wizard', function (evt, data) {
+  		if (player().recording) {
+	  		$('#myPleaseWait').modal('show');
+	  		playback_data = player().recording.export("lz")
+			$.ajax({
+			  method: "POST",
+			  dataType: 'json',
+			  url: "/playbacks",
+			  data: {playback: { name: $("#playback_name").val(), data: playback_data } }
+			}).done(function( msg ) {
+			    $('#myPleaseWait').modal('hide');
+			    window.location.href = "/playbacks";
+			}).fail(function(msg) {
+				str = "<ul><h2>Save failed</h2>"
+				for (name in msg.responseJSON) {
+					str += "<li>" + name + ' ' + msg.responseJSON[name] + "</li>"
+				}
+				str += "</ul>"
+				$("#errors").html(str);
+				$("#errors").css("display","block");
+				$('#myPleaseWait').modal('hide');
+			});
+		} else {
+  			alert("Please record the playback.");
+  		}
+	});
 </script>

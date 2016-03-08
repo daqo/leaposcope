@@ -4,11 +4,11 @@
     <div class="steps-container">
       <ul class="steps">
         <li data-step="1" data-name="campaign" class="active">
-          <span class="badge">1</span>Name
+          <span>1 </span>Name
           <span class="chevron"></span>
         </li>
         <li data-step="2">
-          <span class="badge">2</span>Record
+          <span>2 </span>Record
           <span class="chevron"></span>
         </li>
       </ul>
@@ -74,3 +74,27 @@
     </div>
 </div>
 <!-- Waiting Modal ends Here -->
+
+<script>
+$( document ).ready(function() {
+    $("#playback_name").keyup(function() {
+      if ($("#playback_name").val() != "") {
+        $("#nextBtn").removeAttr("disabled");
+      } else {
+        $("#nextBtn").attr("disabled", "disabled");
+      }
+      });
+    
+    enable_canvas();
+
+    $("#recordBtn").click(function() {
+        player().record();
+        $("#playbackBtn").attr('disabled', 'disabled');
+      });
+
+    $("#playbackBtn").click(function() {
+        player().recording.setFrames(player().recording.frameData);
+            player().play();
+      });
+  });
+</script>
