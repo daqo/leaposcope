@@ -23,14 +23,12 @@
 //= require playbacks
 //= require lib/FileSaver
 
-// function activate(id) {
-// 	$('.nav-link').removeClass('active');
-// 	document.getElementById(id).className = "nav-link active";
-// }
-
 
 var enable_canvas;
 var allowedRecordingLength = 300;
+// To make sure that the canvas is enabled upon entering the second page of new/edit wizard,
+// a timer has been used. When #leap-canvas element is enabled, 
+// the leap controller gets initiated and timer get disabled.
 enable_canvas = function() {
   var timerId;
   timerId = 0;
@@ -62,3 +60,5 @@ enable_canvas = function() {
     });
   }), 100);
 };
+
+
