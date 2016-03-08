@@ -1,15 +1,5 @@
-  <% if @playback.errors.any? %>
-    <div class="alert alert-danger" role="alert">
-      <h2><%= pluralize(@playback.errors.count, "error") %> prohibited this playback from being saved:</h2>
-
-      <ul>
-      <% @playback.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 <div class='content-header'>
+	<div id="errors" class="alert alert-danger" role="alert" style="display:none"></div>
 	<div class="wizard" data-initialize="wizard" id="myWizard">
 		<div class="steps-container">
 		  <ul class="steps">

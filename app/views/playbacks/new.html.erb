@@ -36,7 +36,14 @@
 				    $('#myPleaseWait').modal('hide');
 				    window.location.href = "/playbacks";
 				}).fail(function(msg) {
-					window.location.href = "/playbacks/new";
+					str = "<ul><h2>Save failed</h2>"
+					for (name in msg.responseJSON) {
+						str += "<li>" + name + ' ' + msg.responseJSON[name] + "</li>"
+					}
+					str += "</ul>"
+					$("#errors").html(str);
+					$("#errors").css("display","block");
+					$('#myPleaseWait').modal('hide');
 				});
 			} else {
 	  			alert("Please record the playback.");
